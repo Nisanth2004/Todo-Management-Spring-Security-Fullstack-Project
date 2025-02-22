@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { getAllTodos } from '../service/TodoService';
+import { deleteTodo, getAllTodos } from '../service/TodoService';
+import { useNavigate } from 'react-router-dom';
 
 const ListTodoComponent = () => {
 
     
     const[todos,setTodos]=useState([]);
+    const navigate= useNavigate();
 
     useEffect(()=>{
         listTodos()
@@ -20,10 +22,32 @@ const ListTodoComponent = () => {
         })
     }
 
+    function addNewTodo()
+    {
+
+        navigate('/add-todo')
+    }
+
+    function updateTodo(id)
+    {
+        console.log(id);
+        navigate(`/update-todo/${id}`)
+    }
+
+    function removeTodo(id)
+    {
+        console.log(id);
+       deleteTodo(id).then((response)=>{
+        listTodos();
+       }).catch((error)=>{
+        console.error(error);
+       })
+    }
 
   return (
     <div className='container'>
         <h2 className='text-center'>List of Todos</h2>
+        <button className='btn btn-primary'  onClick={addNewTodo}>Add Todo</button>
         <div>
             <table className='table table-bordered table-striped'>
                  <thead>
@@ -31,6 +55,7 @@ const ListTodoComponent = () => {
                         <th>Todo Title</th>
                         <th>Todo Description</th>
                         <th>Todo Completed</th>
+                        <th>Actions</th>
                     </tr>
                  </thead>
 
@@ -41,6 +66,10 @@ const ListTodoComponent = () => {
                                 <td>{todo.title}</td>
                                 <td>{todo.description}</td>
                                 <td>{todo.completed ? 'YES':'NO'}</td>
+                                <td>
+                                    <button className='btn btn-info' onClick={()=>updateTodo(todo.id)}>Update</button>
+                                    <button className='btn btn-danger ' onClick={()=>removeTodo(todo.id)} style={{marginLeft:"10px"}}>Delete</button>
+                                </td>
 
                             </tr>
 
