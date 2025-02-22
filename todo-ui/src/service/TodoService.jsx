@@ -25,3 +25,12 @@ export function deleteTodo(id)
 {
     return axios.delete(BASE_REST_API_URL+'/'+id);
 }
+
+export function completeTodo(id)
+{
+    return axios.patch(BASE_REST_API_URL+'/'+id+'/complete');
+}
+export function inCompleteTodo(id)
+{
+    return axios.patch(BASE_REST_API_URL+'/'+id+'/incomplete');
+}
