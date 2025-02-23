@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class TodoController {
 
     private TodoService todoService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<TodoDto> addTodo(@RequestBody TodoDto todoDto)
     {
@@ -26,7 +28,7 @@ public class TodoController {
     }
 
     // build get todo rest api
-
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("{id}")
     public ResponseEntity<TodoDto> getTodoById(@PathVariable Long id)
     {
@@ -36,7 +38,7 @@ public class TodoController {
 
 
     // Build get all todos
-
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping
     public ResponseEntity<List<TodoDto>> getAllTodos()
     {
@@ -45,6 +47,7 @@ public class TodoController {
     }
 
     // build update employee REST API
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
     public ResponseEntity<TodoDto> updateEmployee(@RequestBody TodoDto todoDto,@PathVariable Long id)
     {
@@ -54,6 +57,7 @@ public class TodoController {
 
 
     // build delete REST API
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteTodos(@PathVariable Long id)
     {
@@ -62,7 +66,7 @@ public class TodoController {
     }
 
     // Build Completed Todo REST API
-
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PatchMapping("{id}/complete")
     public ResponseEntity<TodoDto> CompletedTodo(@PathVariable Long id)
     {
@@ -73,7 +77,7 @@ public class TodoController {
     }
 
     // Build Completed Todo REST API
-
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PatchMapping("{id}/incomplete")
     public ResponseEntity<TodoDto> InCompletedTodo(@PathVariable Long id)
     {
