@@ -1,5 +1,6 @@
 package com.nisanth.todo.controller;
 
+import com.nisanth.todo.dto.LoginDto;
 import com.nisanth.todo.dto.RegisterDto;
 import com.nisanth.todo.service.AuthService;
 import lombok.AllArgsConstructor;
@@ -23,5 +24,13 @@ public class AuthController {
     {
         String response= authService.register(registerDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    // build login REST API
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto)
+    {
+       String response= authService.login(loginDto);
+       return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }
