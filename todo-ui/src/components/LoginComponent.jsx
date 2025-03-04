@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { loginAPICall, storeToken } from '../service/AuthService';
+import { loginAPICall, saveLoggedInUser, storeToken } from '../service/AuthService';
 import { useNavigate } from 'react-router-dom';
 
 const LoginComponent = () => {
@@ -10,12 +10,12 @@ const LoginComponent = () => {
     const navigator=useNavigate();
 
 
-    function handleLoginFomr(e)
+    async function handleLoginFomr(e)
     {
      e.preventDefault();
 
 
-      loginAPICall(username,password).then((response)=>{
+      await loginAPICall(username,password).then((response)=>{
 
         // after sucessfull login ,create a token and store in local storage
 
@@ -24,7 +24,10 @@ const LoginComponent = () => {
             // covert username and password into base64 text
             const token='Basic '+window.btoa(username+":"+password);
             storeToken(token);
+
+            saveLoggedInUser(username)
             navigator('/todos')
+            window.location.reload(false)
         }).catch(error=> {
             console.error(error);
         })
