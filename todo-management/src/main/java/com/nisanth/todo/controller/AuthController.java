@@ -1,5 +1,6 @@
 package com.nisanth.todo.controller;
 
+import com.nisanth.todo.dto.JwtAuthResponse;
 import com.nisanth.todo.dto.LoginDto;
 import com.nisanth.todo.dto.RegisterDto;
 import com.nisanth.todo.service.AuthService;
@@ -26,9 +27,12 @@ public class AuthController {
 
     // build login REST API
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto)
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto)
     {
-       String response= authService.login(loginDto);
-       return new ResponseEntity<>(response,HttpStatus.OK);
+       String token= authService.login(loginDto);
+
+       JwtAuthResponse jwtAuthResponse=new JwtAuthResponse();
+       jwtAuthResponse.setAccessToken(token);
+       return new ResponseEntity<>(jwtAuthResponse,HttpStatus.OK);
     }
 }
