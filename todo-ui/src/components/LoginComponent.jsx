@@ -22,7 +22,10 @@ const LoginComponent = () => {
             console.log(response.data)
 
             // covert username and password into base64 text
-            const token='Basic '+window.btoa(username+":"+password);
+           // const token='Basic '+window.btoa(username+":"+password);
+
+           //get  JWT Token from response
+           const token='Bearer '+response.data.accessToken;
             storeToken(token);
 
             saveLoggedInUser(username)
