@@ -26,9 +26,12 @@ const LoginComponent = () => {
 
            //get  JWT Token from response
            const token='Bearer '+response.data.accessToken;
+
+           // role based access 
+           const role=response.data.role;
             storeToken(token);
 
-            saveLoggedInUser(username)
+            saveLoggedInUser(username,role)
             navigator('/todos')
             window.location.reload(false)
         }).catch(error=> {
