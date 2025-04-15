@@ -19,7 +19,7 @@ const Header = () => {
       <header>
         <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
             <div>
-                <a href='http://localhost:3000' className='navbar-brand' >
+                <a href='/' className='navbar-brand' >
                 Todo Management Application</a>
             </div>
 
